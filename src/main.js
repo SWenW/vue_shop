@@ -11,6 +11,12 @@ import './assets/fonts/iconfont.css'
 import axios from 'axios'
 // 配置请求的根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+// 给服务器发送的请求进行预先处理，确定用户token再进行权限处理
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+// 可通过this去访问http
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
